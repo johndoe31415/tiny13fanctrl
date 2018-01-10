@@ -45,8 +45,15 @@ void send_byte(uint8_t data) {
 	send_bit(true);			/* Stop bit */
 }
 
-static void init_adc(void) {
+static uint8_t sample_adc(void) {
+	ADCSRA |= _BV(ADSC);
+	while (ADCSRA & _BV(ADSC));
+	return ADCH;	/* Result is left-adjusted, throw away the noisy 2 LSB */
+}
 
+static void init_adc(void) {
+	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1);	/* 1/64 = 150 kHz ADC clock */
+	ADMUX = _BV(MUX1) | _BV(ADLAR);					/* Vref = Vcc, PB4 input, left adjust */
 }
 
 int main(void) {
@@ -54,9 +61,9 @@ int main(void) {
 	init_adc();
 
 	while (true) {
-		send_byte(0x12);
-		send_byte(0x34);
-		send_byte(0x56);
+		send_byte(sample_adc());
+//		send_byte(0x34);
+//		send_byte(0x56);
 		delay_micros(10000);
 	}
 
