@@ -52,13 +52,20 @@ static uint8_t sample_adc(void) {
 }
 
 static void init_adc(void) {
-	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1);	/* 1/64 = 150 kHz ADC clock */
+	ADCSRA = _BV(ADEN) | _BV(ADPS2) | _BV(ADPS1);	/* 1/64 = 150 kHz ADC clock at 9.6 MHz */
 	ADMUX = _BV(MUX1) | _BV(ADLAR);					/* Vref = Vcc, PB4 input, left adjust */
+}
+
+static void init_pwm_output(void) {
+	TCCR0A = _BV(WGM00) | _BV(COM0A1);	/* PWM mode 1, phase-correct PWM to TOP = 0xff */
+	TCCR0B = _BV(CS02) | _BV(CS00);		/* 1/1024 = 18.3 Hz PWM at 9.6 MHz */
+	OCR0A = 0x0;
 }
 
 int main(void) {
 	initHAL();
 	init_adc();
+	init_pwm_output();
 
 	while (true) {
 		send_byte(sample_adc());
