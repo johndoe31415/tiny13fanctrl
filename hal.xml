@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<HAL>
+	<templates>
+		<template name="digio">
+			<pin type="io" initialstate="input" initialpullup="active" />
+		</template>
+
+		<template name="diginput">
+			<pin type="input" initialpullup="active" />
+		</template>
+		
+		<template name="digswitchinput">
+			<pin type="input" initialpullup="active" />
+			<activelow />
+		</template>
+		
+		<template name="digoutput">
+			<pin type="output" initialvalue="inactive" />
+		</template>
+		
+		<template name="adcinput">
+			<pin type="input" initialpullup="inactive" />
+		</template>
+	</templates>
+
+	<portpin name="PB0" template="digoutput">
+		<description value="PWM_OUT" />
+	</portpin>
+	<portpin name="PB4" template="adcinput">
+		<description value="TEMPERATURE" />
+	</portpin>
+	<portpin name="PB3" template="diginput">
+		<description value="PWM_IN" />
+	</portpin>
+	<portpin name="PB2" template="diginput">
+		<description value="FAN_TACHO" />
+	</portpin>
+	<portpin name="PB1" template="digoutput">
+		<description value="DBG" />
+	</portpin>
+</HAL>
