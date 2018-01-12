@@ -19,7 +19,7 @@ every 800ms) in the form of five bytes (all binary):
 
 # Schematic
 The schematic has been drawn with Altium CircuitMaker and [is also available at
-Altium Vault](https://workspace.circuitmaker.com/Projects/Details/Johannes-Bauer/tiny13fanctrl).
+Altium Vault](https://workspace.circuitmaker.com/Projects/Details/johndoe31415/tiny13fanctrl).
 
 # License
 GNU GPL-3.
