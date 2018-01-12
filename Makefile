@@ -3,11 +3,11 @@
 DEVICE := attiny13
 DUDE_DEV := t13
 CLOCK := 9600000
-OBJS := main.o
+OBJS := main.o ntc_adu2degc.o
 
 CC := avr-gcc
-UPLOAD := micronucleus/commandline/micronucleus --run
-CFLAGS := -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+CFLAGS := -std=c11 -g3 -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+CFLAGS += -Wall -Wmissing-prototypes -Wstrict-prototypes -Werror=implicit-function-declaration -Werror=format -Wshadow
 
 all: main main.bin
 

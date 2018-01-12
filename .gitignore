@@ -1,5 +1,5 @@
 .*.swp
+*.o
 main
 main.bin
-main.o
 main.hex
