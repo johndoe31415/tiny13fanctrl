@@ -20,6 +20,9 @@ every 800ms) in the form of five bytes (all binary):
 # Schematic
 The schematic has been drawn with Altium CircuitMaker and [is also available at
 Altium Vault](https://workspace.circuitmaker.com/Projects/Details/johndoe31415/tiny13fanctrl).
+Fuses of the ATtiny13 need to be programmed to 9.6 MHz internal clock:
+
+```-U lfuse:w:0x7a:m -U hfuse:w:0xff:m```
 
 # License
 GNU GPL-3.
