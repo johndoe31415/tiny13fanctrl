@@ -107,13 +107,13 @@ int main(void) {
 		uint32_t adc_sum = 0;
 		bool last_tachometer_state = true;
 		uint16_t fan_rotations = 0;
-		uint16_t pwm_in_duty_cycle = 0;
+		uint16_t samples_pwm_high = 0;
 
 		/* Collect samples */
 		for (uint16_t i = 0; i < SAMPLE_COUNT; i++) {
 			adc_sum += sample_adc();
 			if (PWM_IN_IsActive()) {
-				pwm_in_duty_cycle++;
+				samples_pwm_high++;
 			}
 			bool current_tachometer_state = FAN_TACHO_IsActive();
 			if (current_tachometer_state != last_tachometer_state) {
@@ -127,8 +127,8 @@ int main(void) {
 		uint8_t avg_adc_value = adc_sum / SAMPLE_COUNT;
 		int16_t temperature_deg_c = ntc_adu2degc(avg_adc_value);
 
-		/* For full PWM input, add 16°C to our measurement */
-		uint8_t temperature_added_by_pwm = pwm_in_duty_cycle / (SAMPLE_COUNT / 16);
+		/* Add up to 15°C for full PWM_IN to our measurement */
+		uint8_t temperature_added_by_pwm = samples_pwm_high / (SAMPLE_COUNT / 16);
 		int16_t fan_target = temperature_deg_c + temperature_added_by_pwm - 10;
 		if (fan_target < 0) {
 			fan_target = 0;
