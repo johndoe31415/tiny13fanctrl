@@ -17,6 +17,11 @@ every 800ms) in the form of five bytes (all binary):
   4. Target fan rotations per sampling period (for Arctic F8, that's 50 for full throttle at 12 VDC)
   5. PWM register value OCR0A
 
+# Build Video
+I've created a build video of this circuit with further explanations, which you
+[can find on YouTube](https://www.youtube.com/watch?v=_cuEG-wj89E). You can see
+where I wired up the cables at [timestamp 4:08](https://youtu.be/_cuEG-wj89E?t=248).
+
 # Schematic
 The schematic has been drawn with Altium CircuitMaker and [is also available at
 Altium Vault](https://workspace.circuitmaker.com/Projects/Details/johndoe31415/tiny13fanctrl).
