@@ -1,4 +1,4 @@
-.PHONY: all clean program reset halgen
+.PHONY: all clean program program-fuses reset halgen
 
 DEVICE := attiny13
 DUDE_DEV := t13
@@ -9,16 +9,21 @@ CC := avr-gcc
 CFLAGS := -std=c11 -g3 -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 CFLAGS += -Wall -Wmissing-prototypes -Wstrict-prototypes -Werror=implicit-function-declaration -Werror=format -Wshadow
 
+PROGRAMMER := avrispmkII
+
 all: main main.bin
 
 .c.o:
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 reset:
-	avrdude -c avrispmkII -p $(DUDE_DEV) -B 10
+	avrdude -c $(PROGRAMMER) -p $(DUDE_DEV) -B 10
 
 program: main.hex
-	avrdude -c avrispmkII -p $(DUDE_DEV) -B 4 -U flash:w:main.hex:i
+	avrdude -c $(PROGRAMMER) -p $(DUDE_DEV) -B 4 -U flash:w:main.hex:i
+
+program-fuses:
+	avrdude -c $(PROGRAMMER) -p $(DUDE_DEV) -B 4 -U lfuse:w:0x7a:m -U hfuse:w:0xff:m
 
 clean:
 	rm -f main.hex main.bin main $(OBJS)
